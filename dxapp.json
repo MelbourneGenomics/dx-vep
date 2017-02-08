@@ -1,0 +1,90 @@
+{
+  "name": "vep",
+  "title": "Vep",
+  "summary": "A VEP (Ensembl Variant Effect Predictor) app for the DNA Nexus Platform Edit",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "variants",
+      "label": "Variants",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_fasta",
+      "label": "Reference FASTA",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fasta"
+      ],
+      "help": ""
+    },
+    {
+      "name": "variant_class",
+      "label": "Variant Class",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Output the Sequence Ontology variant class"
+    },
+    {
+      "name": "sift",
+      "label": "Sift",
+      "class": "string",
+      "optional": true,
+      "default": "",
+      "choices": [
+        {"name": "Prediction Term", "value": "p"},
+        {"name": "Prediction Score", "value": "s"},
+        {"name": "Both", "value": "b"},
+        {"name": "Neither", "value": ""}
+      ],
+      "help": "Output the Sequence Ontology variant class"
+    },
+  ],
+  "outputSpec": [
+    {
+      "name": "annotated_vcf",
+      "label": "Annotated VCF",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "pathlib2",
+        "package_manager": "pip",
+        "version": "2.2.1"
+      }
+    ],
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "python2.7",
+    "file": "src/vep.py",
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem3_ssd1_x2"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  }
+}
