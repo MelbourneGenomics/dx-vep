@@ -40,13 +40,621 @@
       "optional": true,
       "default": "",
       "choices": [
-        {"name": "Prediction Term", "value": "p"},
-        {"name": "Prediction Score", "value": "s"},
-        {"name": "Both", "value": "b"},
-        {"name": "Neither", "value": ""}
+        {
+          "name": "Prediction Term",
+          "value": "p"
+        },
+        {
+          "name": "Prediction Score",
+          "value": "s"
+        },
+        {
+          "name": "Both",
+          "value": "b"
+        },
+        {
+          "name": "Neither",
+          "value": ""
+        }
       ],
-      "help": "Output the Sequence Ontology variant class"
+      "help": "Enable SIFT, a tool which predicts whether an amino acid substitution affects protein function based on sequence homology and the physical properties of amino acids."
     },
+    {
+      "name": "polyphen",
+      "label": "PolyPhen",
+      "class": "string",
+      "optional": true,
+      "default": "",
+      "choices": [
+        {
+          "name": "Prediction Term",
+          "value": "p"
+        },
+        {
+          "name": "Prediction Score",
+          "value": "s"
+        },
+        {
+          "name": "Both",
+          "value": "b"
+        },
+        {
+          "name": "Neither",
+          "value": ""
+        }
+      ],
+      "help": "Enable PolyPhen, a tool which predicts possible impact of an amino acid substitution on the structure and function of a human protein using straightforward physical and comparative considerations."
+    },
+    {
+      "name": "humdiv",
+      "label": "humDiv PolyPhen prediction",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Retrieve the humDiv PolyPhen prediction instead of the defaulat humVar"
+    },
+    {
+      "name": "gene_phenotype",
+      "label": "Gene Phenotype",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Indicates if the overlapped gene is associated with a phenotype, disease or trait"
+    },
+    {
+      "name": "regulatory",
+      "label": "Regulatory",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Look for overlaps with regulatory regions. Output lines have a Feature type of RegulatoryFeature or MotifFeature"
+    },
+    {
+      "name": "cell_type",
+      "label": "Cell Type",
+      "class": "string",
+      "optional": true,
+      "default": "",
+      "help": "Report only regulatory regions that are found in the given cell type(s). Can be a single cell type or a comma-separated list. The functional type in each cell type is reported under CELL_TYPE in the output. To retrieve a list of cell types, use --cell_type list."
+    },
+    {
+      "name": "plugins",
+      "label": "Plugins",
+      "class": "array:string",
+      "optional": true,
+      "default": [],
+      "help": "Use named plugins"
+    },
+    {
+      "name": "individuals",
+      "label": "Individuals",
+      "class": "array:string",
+      "optional": true,
+      "default": null,
+      "help": "Consider only alternate alleles present in the genotypes of the specified individual(s). Individual variant combinations homozygous for the given reference allele will not be reported. Each individual and variant combination is given on a separate line of output. Only works with VCF files containing individual genotype data; individual IDs are taken from column headers."
+    },
+    {
+      "name": "phased",
+      "label": "Phased",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Force VCF genotypes to be interpreted as phased. For use with plugins that depend on phased data."
+    },
+    {
+      "name": "allele_number",
+      "label": "Allele Number",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Identify allele number from VCF input, where 1 = first ALT allele, 2 = second ALT allele etc."
+    },
+    {
+      "name": "total_length",
+      "label": "Total Length",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Give cDNA, CDS and protein positions as Position/Length"
+    },
+    {
+      "name": "numbers",
+      "label": "Numbers",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds affected exon and intron numbering to to output. Format is Number/Total."
+    },
+    {
+      "name": "domains",
+      "label": "Domains",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds names of overlapping protein domains to output."
+    },
+    {
+      "name": "no_escape",
+      "label": "No Escape",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Don't URI escape HGVS strings"
+    },
+    {
+      "name": "keep_csq",
+      "label": "Keep CSQ",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Don't overwrite existing CSQ entry in VCF INFO field"
+    },
+    {
+      "name": "vcf_info_field",
+      "label": "VCF Info Field",
+      "class": "string",
+      "optional": true,
+      "default": "",
+      "help": "Change the name of the INFO key that VEP write the consequences to in its VCF output. Use \"ANN\" for compatibility with other tools such as snpEff. Default: CSQ"
+    },
+    {
+      "name": "terms",
+      "label": "Terms",
+      "class": "string",
+      "optional": true,
+      "default": "so",
+      "choices": [
+        {
+          "name": "Sequence Ontology",
+          "value": "so"
+        },
+        {
+          "name": "Ensembl",
+          "value": "emsembl"
+        }
+      ],
+      "help": "The type of consequence terms to output. The Ensembl terms are described at http://asia.ensembl.org/info/genome/variation/predicted_data.html#consequences. The Sequence Ontology is a joint effort by genome annotation centres to standardise descriptions of biological sequences. Default = \"SO\""
+    },
+    {
+      "name": "no_consequences",
+      "label": "No Consequences",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Skip consequence calculation; all variants are assigned the default intergenic consequence type. This can be useful if you wish to just run a plugin, for example."
+    },
+    {
+      "name": "hgvs",
+      "label": "HGVS",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Add HGVS nomenclature based on Ensembl stable identifiers to the output. Both coding and protein sequence names are added where appropriate. HGVS notations given on Ensembl identifiers are versioned."
+    },
+    {
+      "name": "shift_hgvs",
+      "label": "Shift HGVS",
+      "class": "boolean",
+      "optional": true,
+      "default": true,
+      "help": "Enable or disable 3' shifting of HGVS notations. When enabled, this causes ambiguous insertions or deletions (typically in repetetive sequence tracts) to be \"shifted\" to their most 3' possible coordinates (relative to the transcript sequence and strand) before the HGVS notations are calculated; the flag HGVS_OFFSET is set to the number of bases by which the variant has shifted, relative to the input genomic coordinates. Disabling retains the original input coordinates of the variant."
+    },
+    {
+      "name": "protein",
+      "label": "Protein",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Add the Ensembl protein identifier to the output where appropriate."
+    },
+    {
+      "name": "symbol",
+      "label": "Symbol",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds the gene symbol (e.g. HGNC) (where available) to the output."
+    },
+    {
+      "name": "ccds",
+      "label": "CCDS",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds the CCDS transcript identifer (where available) to the output."
+    },
+    {
+      "name": "uniprot",
+      "label": "Uniprot",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds best match accessions for translated protein products from three UniProt-related databases (SWISSPROT, TREMBL and UniParc) to the output."
+    },
+    {
+      "name": "tsl",
+      "label": "TSL",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds the transcript support level for this transcript to the output."
+    },
+    {
+      "name": "appris",
+      "label": "APPRIS",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds the APPRIS isoform annotation for this transcript to the output."
+    },
+    {
+      "name": "canonical",
+      "label": "Canonical",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds a flag indicating if the transcript is the canonical transcript for the gene."
+    },
+    {
+      "name": "biotype",
+      "label": "Biotype",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Adds the biotype of the transcript or regulatory feature."
+    },
+    {
+      "name": "xref_refseq",
+      "label": "Xref Refseq",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Output aligned RefSeq mRNA identifier for transcript. NB: theRefSeq and Ensembl transcripts aligned in this way MAY NOT, AND FREQUENTLY WILL NOT, match exactly in sequence, exon structure and protein product."
+    },
+    {
+      "name": "synonyms",
+      "label": "Synonyms",
+      "class": "file",
+      "optional": true,
+      "default": false,
+      "help": "Load a file of chromosome synonyms. File should be tab-delimited with the primary identifier in column 1 and the synonym in column 2. Synonyms are used bi-directionally so columns may be switched. Synoyms allow you to use different chromosome identifiers in your input file to those used in any annotation source used (cache, DB)."
+    },
+    {
+      "name": "check_existing",
+      "label": "Check Existing",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Checks for the existence of known variants that are co-located with your input. By default the alleles are not compared"
+    },
+    {
+      "name": "check_alleles",
+      "label": "Check Alleles",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "When checking for existing variants, only report a co-located variant if none of the alleles supplied are novel. For example, if the user input has alleles A/G, and an existing co-located variant has alleles A/C, the co-located variant will not be reported.\n\nStrand is also taken into account - in the same example, if the user input has alleles T/G but on the negative strand, then the co-located variant will be reported since its alleles match the reverse complement of user input."
+    },
+    {
+      "name": "check_svs",
+      "label": "Check SVS",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Checks for the existence of structural variants that overlap your input. Currently requires database access."
+    },
+    {
+      "name": "gmaf",
+      "label": "GMAF",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Add the global minor allele frequency (MAF) from 1000 Genomes Phase 3 data for any existing variant to the output."
+    },
+    {
+      "name": "maf_1kg",
+      "label": "1000 Genomes MAF",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Add allele frequency from continental populations (AFR,AMR,EAS,EUR,SAS) of 1000 Genomes Phase 3 to the output. Note the reported allele(s) and frequencies are for the non-reference allele from the original data, not necessarily the alternate allele from user input."
+    },
+    {
+      "name": "maf_esp",
+      "label": "NHLBI-ESP MAF",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Include allele frequency from NHLBI-ESP populations. Note the reported allele(s) and frequencies are for the non-reference allele from the originial data, not necessarily the alternate allele from user input. Must be used with --cache"
+    },
+    {
+      "name": "maf_exac",
+      "label": "ExAC MAF",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Include allele frequency from ExAC project populations. Note the reported allele(s) and frequencies are for the non-reference allele from the originial data, not necessarily the alternate allele from user input. Must be used with --cache"
+    },
+    {
+      "name": "old_maf",
+      "label": "Old Maf",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "For maf_1kg and maf_esp report only the frequency (no allele) and convert this frequency so it is always a minor frequency, i.e. < 0.5"
+    },
+    {
+      "name": "pubmed",
+      "label": "Pubmed",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Report Pubmed IDs for publications that cite existing variant"
+    },
+    {
+      "name": "failed",
+      "label": "Failed",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "When checking for co-located variants, by default the script will exclude variants that have been flagged as failed. Set this flag to include such variants. Default: 0 (exclude)"
+    },
+    {
+      "name": "fields",
+      "label": "Fields",
+      "class": "array:string",
+      "optional": true,
+      "default": null,
+      "help": "Configure the output format using a comma separated list of fields. Fields may be those present in the default output columns, or any of those that appear in the Extra column (including those added by plugins or custom annotations). Output remains tab-delimited."
+    },
+    {
+      "name": "minimal",
+      "label": "Minimal",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Convert alleles to their most minimal representation before consequence calculation i.e. sequence that is identical between each pair of reference and alternate alleles is trimmed off from both ends, with coordinates adjusted accordingly. Note this may lead to discrepancies between input coordinates and coordinates reported by VEP relative to transcript sequences; to avoid issues, use --allele_number and/or ensure that your input variants have unique identifiers. The MINIMISED flag is set in the VEP output where relevant."
+    },
+    {
+      "name": "check_ref",
+      "label": "Check Ref",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Force the script to check the supplied reference allele against the sequence stored in the Ensembl Core database. Lines that do not match are skipped."
+    },
+    {
+      "name": "coding_only",
+      "label": "Coding Only",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Only return consequences that fall in the coding regions of transcripts."
+    },
+    {
+      "name": "chr",
+      "label": "Chromosomes",
+      "class": "array:string",
+      "optional": true,
+      "default": null,
+      "help": "Select a subset of chromosomes to analyse from your file. Any data not on this chromosome in the input will be skipped. The list can be comma separated, with \"-\" characters representing an interval. For example, to include chromsomes 1, 2, 3, 10 and X you could use --chr 1-3,10,X"
+    },
+    {
+      "name": "no_intergenic",
+      "label": "No Intergenic",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Do not include intergenic consequences in the output."
+    },
+    {
+      "name": "pick",
+      "label": "Pick",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Pick once line or block of consequence data per variant, including transcript-specific columns. Consequences are chosen according to the criteria described here, and the order the criteria are applied may be customised with --pick_order. This is the best method to use if you are interested only in one consequence per variant."
+    },
+    {
+      "name": "pick_allele",
+      "label": "Pick Allele",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Like pick, but chooses one line or block of consequence data per variant allele. Will only differ in behaviour from pick when the input variant has multiple alternate alleles."
+    },
+    {
+      "name": "flag_pick",
+      "label": "Flag Pick",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "As per pick, but adds the PICK flag to the chosen block of consequence data and retains others."
+    },
+    {
+      "name": "flag_pick_allele",
+      "label": "Flag Pick Allele",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "As per pick_allele, but adds the PICK flag to the chosen block of consequence data and retains others."
+    },
+    {
+      "name": "per_gene",
+      "label": "Per Gene",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Output only the most severe consequence per gene. The transcript selected is arbitrary if more than one has the same predicted consequence. Uses the same ranking system as --pick."
+    },
+    {
+      "name": "pick_order",
+      "label": "pick_order",
+      "class": "array:string",
+      "optional": true,
+      "default": false,
+      "choices": [
+        {
+          "name": "Canonical",
+          "value": "canonical"
+        },
+        {
+          "name": "Appris",
+          "value": "appris"
+        },
+        {
+          "name": "TSL",
+          "value": "tsl"
+        },
+        {
+          "name": "Biotype",
+          "value": "biotype"
+        },
+        {
+          "name": "CCDS",
+          "value": "ccds"
+        },
+        {
+          "name": "Rank",
+          "value": "rank"
+        },
+        {
+          "name": "Length",
+          "value": "length"
+        }
+      ],
+      "help": "Customise the order of criteria applied when choosing a block of annotation data with e.g. pick. See this page for the default order."
+    },
+    {
+      "name": "most_severe",
+      "label": "Most Severe",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Output only the most severe consequence per variation. Transcript-specific columns will be left blank. Consequence ranks are given in the table here: http://asia.ensembl.org/info/genome/variation/predicted_data.html#consequences."
+    },
+    {
+      "name": "summary",
+      "label": "Summary",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Output only a comma-separated list of all observed consequences per variation. Transcript-specific columns will be left blank."
+    },
+    {
+      "name": "filter_common",
+      "label": "Filter Common",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Shortcut flag for the filters below - this will exclude variants that have a co-located existing variant with global MAF > 0.01 (1%). May be modified using any of the following freq_* filters. For human, this can be used in offline mode for the following populations: 1KG_ALL, 1KG_AFR, 1KG_AMR, 1KG_ASN, 1KG_EUR."
+    },
+    {
+      "name": "check_frequency",
+      "label": "Check Frequency",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Turns on frequency filtering. Use this to include or exclude variants based on the frequency of co-located existing variants in the Ensembl Variation database. You must also specify all of the freq flags below. Using this option requires a database connection - while it can be used with --cache, the database will still be accessed to retrieve frequency data. Frequencies used in filtering are added to the output under the FREQS key in the Extra field."
+    },
+    {
+      "name": "freq_pop",
+      "label": "Frequency Filter Population",
+      "class": "string",
+      "optional": true,
+      "default": false,
+      "help": "Name of the population to use in frequency filter. This can be the name of the population as it appears on the Ensembl website (suitable for most species)"
+    },
+    {
+      "name": "freq_freq",
+      "label": "Frequency Filter Value",
+      "class": "float",
+      "optional": true,
+      "default": null,
+      "help": "Minor allele frequency to use for filtering. Must be a float value between 0 and 0.5"
+    },
+    {
+      "name": "freq_gt_lt",
+      "label": "Frequency Filter Direction",
+      "class": "string",
+      "optional": true,
+      "default": false,
+      "choices": [
+        {
+          "name": "less than",
+          "value": "lt"
+        },
+        {
+          "name": "greater than",
+          "value": "gt"
+        }
+      ],
+      "help": "Specify whether the frequency of the co-located variant must be greater than (gt) or less than (lt) the value specified with --freq_freq"
+    },
+    {
+      "name": "freq_filter",
+      "label": "Frequency Filter Include",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "choices": [
+        {
+          "name": "Exclude",
+          "value": "exclude"
+        },
+        {
+          "name": "Include",
+          "value": "include"
+        }
+      ],
+      "help": "Specify whether to exclude or include only variants that pass the frequency filter"
+    },
+    {
+      "name": "allow_non_variant",
+      "label": "Allow Non Variant",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "When using VCF format as input and output, by default VEP will skip non-variant lines of input (where the ALT allele is null). Enabling this option the lines will be printed in the VCF output with no consequence data added."
+    },
+    {
+      "name": "cache",
+      "label": "Cache Version",
+      "class": "string",
+      "optional": false,
+      "default": "ensembl",
+      "choices": [
+        {
+          "name": "Ensembl",
+          "value": "ensembl"
+        },
+        {
+          "name": "Refseq",
+          "value": "refseq"
+        },
+        {
+          "name": "Merged",
+          "value": "merged"
+        }
+      ],
+      "help": "Specifies which version of the VEP cache to use."
+    },
+    {
+      "name": "all_refseq",
+      "label": "All Refseq",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "When using the RefSeq or merged cache, include e.g. CCDS and Ensembl EST transcripts in addition to those from RefSeq (see documentation). Only works when cache is 'merged' or 'refseq'"
+    },
+    {
+      "name": "lrg",
+      "label": "LRG",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "Map input variants to LRG coordinates (or to chromosome coordinates if given in LRG coordinates), and provide consequences on both LRG and chromosomal transcripts. Not compatible with --offline"
+    }
   ],
   "outputSpec": [
     {

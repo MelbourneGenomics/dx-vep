@@ -35,10 +35,14 @@ def main(vcf, reference_fasta, variant_class, sift):
             '--cache',
             '--offline',
             '--fasta',
+            '--vcf'
             ]
 
     # Handle optional parameters
-    if
+    if variant_class:
+        args.append('--variant_class')
+    if sift:
+        args.extend(['--sift', sift])
 
     subprocess.check_call(args)
 
