@@ -680,7 +680,7 @@
         "hours": 48
       }
     },
-    "interpreter": "python2.7",
+    "interpreter": "bash",
     "file": "src/vep.py",
     "systemRequirements": {
       "*": {

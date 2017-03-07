@@ -1,3 +1,0 @@
-
-
-vep: resources

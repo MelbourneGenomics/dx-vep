@@ -1,6 +1,8 @@
 .idea
 **.doit.db*
 resources/
+assets/Bio
+assets/vep*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

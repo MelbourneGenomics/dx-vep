@@ -1,0 +1,14 @@
+{
+  "name": "vep_pl_assets",
+  "title": "vep.pl Assets",
+  "description": "vep.pl Assets",
+  "version": "0.0.1",
+  "distribution": "Ubuntu",
+  "instanceType": "mem1_ssd1_x2",
+  "release": "14.04",
+  "excludeResource": [],
+  "execDepends": [
+    {"name": "perl", "package_manager": "apt"},
+    {"name": "lftp", "package_manager": "apt"}
+  ]
+}
