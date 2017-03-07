@@ -1,9 +1,11 @@
 VEP_VERSION = 87.26
-VEP = vep
+ROOT = /vep
+VEP = $(ROOT)/vep
+API = $(ROOT)/Bio
 INSTALL = $(VEP)/INSTALL.pl
 
 install_deps: $(INSTALL)
-	perl $(VEP)/INSTALL.pl\
+	cd $(ROOT) && perl $(VEP)/INSTALL.pl\
 		--AUTO apl\
 		--NO_HTSLIB\
 		--SPECIES homo_sapiens_refseq homo_sapiens_merged homo_sapiens\
@@ -11,7 +13,7 @@ install_deps: $(INSTALL)
 		--PLUGINS all\
 
 clean:
-	rm -rf $(VEP) Bio
+	rm -rf $(VEP) $(API)
 
 $(INSTALL):
 	mkdir -p $(VEP)

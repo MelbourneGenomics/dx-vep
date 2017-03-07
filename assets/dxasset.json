@@ -8,7 +8,6 @@
   "release": "14.04",
   "excludeResource": [],
   "execDepends": [
-    {"name": "perl", "package_manager": "apt"},
-    {"name": "lftp", "package_manager": "apt"}
+    {"name": "perl", "package_manager": "apt"}
   ]
 }
