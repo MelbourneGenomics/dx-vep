@@ -1,6 +1,6 @@
 .idea
 **.doit.db*
-resources/
+/resources/
 assets/Bio
 assets/vep*
 
