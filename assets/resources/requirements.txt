@@ -1,3 +1,0 @@
-git+https://github.com/MelbourneGenomics/python-assets.git
-doit
-dxpy
