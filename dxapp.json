@@ -38,25 +38,8 @@
       "label": "Sift",
       "class": "string",
       "optional": true,
+      "choices": ["p", "s", "b", ""],
       "default": "",
-      "choices": [
-        {
-          "name": "Prediction Term",
-          "value": "p"
-        },
-        {
-          "name": "Prediction Score",
-          "value": "s"
-        },
-        {
-          "name": "Both",
-          "value": "b"
-        },
-        {
-          "name": "Neither",
-          "value": ""
-        }
-      ],
       "help": "Enable SIFT, a tool which predicts whether an amino acid substitution affects protein function based on sequence homology and the physical properties of amino acids."
     },
     {
@@ -64,25 +47,8 @@
       "label": "PolyPhen",
       "class": "string",
       "optional": true,
+      "choices": ["p", "s", "b", ""],
       "default": "",
-      "choices": [
-        {
-          "name": "Prediction Term",
-          "value": "p"
-        },
-        {
-          "name": "Prediction Score",
-          "value": "s"
-        },
-        {
-          "name": "Both",
-          "value": "b"
-        },
-        {
-          "name": "Neither",
-          "value": ""
-        }
-      ],
       "help": "Enable PolyPhen, a tool which predicts possible impact of an amino acid substitution on the structure and function of a human protein using straightforward physical and comparative considerations."
     },
     {
@@ -130,7 +96,6 @@
       "label": "Individuals",
       "class": "array:string",
       "optional": true,
-      "default": null,
       "help": "Consider only alternate alleles present in the genotypes of the specified individual(s). Individual variant combinations homozygous for the given reference allele will not be reported. Each individual and variant combination is given on a separate line of output. Only works with VCF files containing individual genotype data; individual IDs are taken from column headers."
     },
     {
@@ -203,16 +168,7 @@
       "class": "string",
       "optional": true,
       "default": "so",
-      "choices": [
-        {
-          "name": "Sequence Ontology",
-          "value": "so"
-        },
-        {
-          "name": "Ensembl",
-          "value": "emsembl"
-        }
-      ],
+      "choices": ["so", "ensembl"],
       "help": "The type of consequence terms to output. The Ensembl terms are described at http://asia.ensembl.org/info/genome/variation/predicted_data.html#consequences. The Sequence Ontology is a joint effort by genome annotation centres to standardise descriptions of biological sequences. Default = \"SO\""
     },
     {
@@ -316,7 +272,6 @@
       "label": "Synonyms",
       "class": "file",
       "optional": true,
-      "default": false,
       "help": "Load a file of chromosome synonyms. File should be tab-delimited with the primary identifier in column 1 and the synonym in column 2. Synonyms are used bi-directionally so columns may be switched. Synoyms allow you to use different chromosome identifiers in your input file to those used in any annotation source used (cache, DB)."
     },
     {
@@ -404,7 +359,6 @@
       "label": "Fields",
       "class": "array:string",
       "optional": true,
-      "default": null,
       "help": "Configure the output format using a comma separated list of fields. Fields may be those present in the default output columns, or any of those that appear in the Extra column (including those added by plugins or custom annotations). Output remains tab-delimited."
     },
     {
@@ -436,7 +390,6 @@
       "label": "Chromosomes",
       "class": "array:string",
       "optional": true,
-      "default": null,
       "help": "Select a subset of chromosomes to analyse from your file. Any data not on this chromosome in the input will be skipped. The list can be comma separated, with \"-\" characters representing an interval. For example, to include chromsomes 1, 2, 3, 10 and X you could use --chr 1-3,10,X"
     },
     {
@@ -492,36 +445,14 @@
       "label": "pick_order",
       "class": "array:string",
       "optional": true,
-      "default": false,
       "choices": [
-        {
-          "name": "Canonical",
-          "value": "canonical"
-        },
-        {
-          "name": "Appris",
-          "value": "appris"
-        },
-        {
-          "name": "TSL",
-          "value": "tsl"
-        },
-        {
-          "name": "Biotype",
-          "value": "biotype"
-        },
-        {
-          "name": "CCDS",
-          "value": "ccds"
-        },
-        {
-          "name": "Rank",
-          "value": "rank"
-        },
-        {
-          "name": "Length",
-          "value": "length"
-        }
+          "canonical",
+          "appris",
+          "tsl",
+          "biotype",
+          "ccds",
+          "rank",
+          "length"
       ],
       "help": "Customise the order of criteria applied when choosing a block of annotation data with e.g. pick. See this page for the default order."
     },
@@ -562,7 +493,6 @@
       "label": "Frequency Filter Population",
       "class": "string",
       "optional": true,
-      "default": false,
       "help": "Name of the population to use in frequency filter. This can be the name of the population as it appears on the Ensembl website (suitable for most species)"
     },
     {
@@ -570,7 +500,6 @@
       "label": "Frequency Filter Value",
       "class": "float",
       "optional": true,
-      "default": null,
       "help": "Minor allele frequency to use for filtering. Must be a float value between 0 and 0.5"
     },
     {
@@ -578,34 +507,20 @@
       "label": "Frequency Filter Direction",
       "class": "string",
       "optional": true,
-      "default": false,
       "choices": [
-        {
-          "name": "less than",
-          "value": "lt"
-        },
-        {
-          "name": "greater than",
-          "value": "gt"
-        }
+          "lt",
+          "gt"
       ],
       "help": "Specify whether the frequency of the co-located variant must be greater than (gt) or less than (lt) the value specified with --freq_freq"
     },
     {
       "name": "freq_filter",
       "label": "Frequency Filter Include",
-      "class": "boolean",
+      "class": "string",
       "optional": true,
-      "default": false,
       "choices": [
-        {
-          "name": "Exclude",
-          "value": "exclude"
-        },
-        {
-          "name": "Include",
-          "value": "include"
-        }
+          "exclude",
+          "include"
       ],
       "help": "Specify whether to exclude or include only variants that pass the frequency filter"
     },
@@ -624,18 +539,9 @@
       "optional": false,
       "default": "ensembl",
       "choices": [
-        {
-          "name": "Ensembl",
-          "value": "ensembl"
-        },
-        {
-          "name": "Refseq",
-          "value": "refseq"
-        },
-        {
-          "name": "Merged",
-          "value": "merged"
-        }
+          "ensembl",
+          "refseq",
+          "merged"
       ],
       "help": "Specifies which version of the VEP cache to use."
     },
@@ -662,17 +568,18 @@
       "label": "Annotated VCF",
       "class": "file",
       "patterns": [
-        "*"
+        "*.vcf"
       ],
       "help": ""
     }
   ],
   "runSpec": {
-    "execDepends": [
+    "assetDepends": [
       {
-        "name": "pathlib2",
-        "package_manager": "pip",
-        "version": "2.2.1"
+        "id": "record-F2z5xgj0Y4BffQKgB7zkPF7v"
+      },
+      {
+        "id": "record-F2zbFyQ0xJY7VF9B1j2QYFVG"
       }
     ],
     "timeoutPolicy": {
@@ -681,7 +588,7 @@
       }
     },
     "interpreter": "bash",
-    "file": "src/vep.py",
+    "file": "src/run.sh",
     "systemRequirements": {
       "*": {
         "instanceType": "mem3_ssd1_x2"
