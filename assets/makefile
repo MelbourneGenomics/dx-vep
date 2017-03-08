@@ -4,20 +4,21 @@ VEP = $(ROOT)/vep
 API = $(ROOT)/Bio
 INSTALL = $(VEP)/INSTALL.pl
 
-install_deps: $(INSTALL)
-	cd $(ROOT) && perl $(VEP)/INSTALL.pl\
-		--AUTO apl\
-		--NO_HTSLIB\
+vep_deps: $(INSTALL) perl_deps
+	cd $(VEP) && perl $(VEP)/INSTALL.pl\
+		--AUTO ap\
 		--SPECIES homo_sapiens_refseq homo_sapiens_merged homo_sapiens\
 		--ASSEMBLY GRCh38\
-		--PLUGINS all\
+		--PLUGINS all
 
 clean:
 	rm -rf $(VEP) $(API)
 
 $(INSTALL):
-	mkdir -p $(VEP)
-	curl 'https://codeload.github.com/Ensembl/ensembl-vep/tar.gz/release/$(VEP_VERSION)' | tar --strip-components 1 -xz -C $(VEP)
+	git clone https://github.com/Ensembl/ensembl-vep --branch release/$(VEP_VERSION) $(VEP)
 
-.PHONY: install_deps clean
+perl_deps:
+	sudo cpanm --installdeps --force ~
+
+.PHONY: vep_deps clean perl_deps
 
