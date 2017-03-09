@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -e -x -o pipefail
 
-
 #
 # Fetch inputs (~/in/vcfgz/*)
 #
 dx-download-all-inputs --parallel
 
 # Run Variant Effect Predictor
-perl /vep/vep/vep.pl -i ./in/vcfgz/* --cache --dir /vep --offline --vcf -o ./out/annotated_vcf/out.vcf --everything --no_stats --fork `nproc`
+mkdir -p ./out/annotated_vcf
+perl /vep/vep/vep.pl -i ./in/variants/* --cache --dir /vep --offline --vcf -o ./out/annotated_vcf/out.vcf --everything --no_stats --fork `nproc`
 
 #vcf-sort < output.vcf > output.sorted.vcf
 #
